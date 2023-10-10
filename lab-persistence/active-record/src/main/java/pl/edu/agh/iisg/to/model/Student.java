@@ -3,6 +3,7 @@ package pl.edu.agh.iisg.to.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -88,8 +89,27 @@ public class Student {
     }
 
     public Map<Course, Float> createReport() {
-        // TODO additional task
-        return Collections.emptyMap();
+        String createReportSql = "SELECT course.id, AVG(grade.grade) as avg " +
+                                "FROM grade " +
+                                "JOIN course ON course.id = grade.course_id " +
+                                "WHERE grade.student_id = ? " +
+                                "GROUP BY course.name";
+        Object[] args = {
+                id
+        };
+
+        Map<Course, Float> report = new HashMap<>();
+        try (ResultSet rs = QueryExecutor.read(createReportSql, args)) {
+            while (rs.next()) {
+                Optional<Course> course = Course.findById(rs.getInt("id"));
+                Float avg = rs.getFloat("avg");
+                course.ifPresent(c -> report.put(c, avg));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return report;
     }
 
     public int id() {
