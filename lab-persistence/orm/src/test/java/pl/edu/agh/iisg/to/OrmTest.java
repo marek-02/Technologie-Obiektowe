@@ -3,6 +3,7 @@ package pl.edu.agh.iisg.to;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -140,16 +141,21 @@ public class OrmTest {
         // When
         var student = studentDao.create("Kasia", "Kowalska", 900124);
         var course = courseDao.create("MOWNIT 2");
+        var course2 = courseDao.create("MOWNIT 3");
+
+        courseDao.enrollStudent(course.get(), student.get());
 
         var initialStudentGradesSize = student.get().gradeSet().size();
-        boolean studentGraded = gradeDao.gradeStudent(student.get(), course.get(), 5.0f);
+        boolean studentGradedWithoutEnroll = gradeDao.gradeStudent(student.get(), course2.get(), 4.0f);
+        boolean studentGradedWithEnroll = gradeDao.gradeStudent(student.get(), course.get(), 5.0f);
         var resultStudentGradesSize = student.get().gradeSet().size();
 
         // Then
         checkStudent(student);
         checkCourse(course);
 
-        assertTrue(studentGraded);
+        assertTrue(studentGradedWithEnroll);
+        assertFalse(studentGradedWithoutEnroll);
         assertEquals(0, initialStudentGradesSize);
         assertEquals(1, resultStudentGradesSize);
     }
@@ -160,6 +166,9 @@ public class OrmTest {
         var student = studentDao.create("Kasia", "Kowalska", 1000124);
         var course1 = courseDao.create("Bazy");
         var course2 = courseDao.create("Bazy 2");
+
+        courseDao.enrollStudent(course1.get(), student.get());
+        courseDao.enrollStudent(course2.get(), student.get());
 
         gradeDao.gradeStudent(student.get(), course1.get(), 5.0f);
         gradeDao.gradeStudent(student.get(), course1.get(), 4.0f);
