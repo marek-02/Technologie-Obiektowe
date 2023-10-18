@@ -30,14 +30,12 @@ public class SchoolDemo {
     public SchoolDemo() {
         Injector injector = Guice.createInjector(new SchoolModule());
         school = injector.getInstance(School.class);
+
+//        School school2 = injector.getInstance(School.class);
+//        TODO: zamiast normalnego sprawdzenia sout-em napisać test jak masochista
     }
 
     public static void main(String[] args) throws Exception {
-
-        Logger.getInstance().registerSerializer(new ConsoleMessageSerializer());
-        Logger.getInstance().registerSerializer(
-                new FileMessageSerializer("logfile.log"));
-
         SchoolDemo schoolDemo = new SchoolDemo();
         schoolDemo.initTeachers();
         schoolDemo.initClass();

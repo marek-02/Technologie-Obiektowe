@@ -9,7 +9,7 @@ import pl.edu.agh.school.persistence.SerializablePersistenceManager;
 
 public class SchoolDAO {
 
-    public static final Logger log = Logger.getInstance();
+    public final Logger log;
 
     private final List<Teacher> teachers;
 
@@ -17,10 +17,11 @@ public class SchoolDAO {
 
     private final IPersistenceManager manager;
 
-    public SchoolDAO(IPersistenceManager manager) {
+    public SchoolDAO(IPersistenceManager manager, Logger log) {
         this.manager = manager;
         teachers = manager.loadTeachers();
         classes = manager.loadClasses();
+        this.log = log;
     }
 
     public void addTeacher(Teacher teacher) {

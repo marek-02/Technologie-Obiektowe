@@ -1,5 +1,6 @@
 package pl.edu.agh.school;
 
+import pl.edu.agh.logger.Logger;
 import pl.edu.agh.school.persistence.IPersistenceManager;
 import pl.edu.agh.school.persistence.SerializablePersistenceManager;
 
@@ -12,8 +13,8 @@ public class School {
     private SchoolDAO schoolDAO;
 
     @Inject
-    public School(IPersistenceManager manager) {
-        this.schoolDAO = new SchoolDAO(manager);
+    public School(IPersistenceManager manager, Logger log) {
+        this.schoolDAO = new SchoolDAO(manager, log);
     }
 
     public void addTeacher(Teacher teacher) {

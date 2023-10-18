@@ -38,8 +38,6 @@ public class SchoolClass implements Serializable {
 	public void addSubject(Subject subject) {
 		if (!subjects.contains(subject)) {
 			subjects.add(subject);
-			Logger.getInstance().log(
-					"Added " + subject.toString() + " to " + this.toString());
 		}
 	}
 
@@ -51,9 +49,6 @@ public class SchoolClass implements Serializable {
 		if (!students.contains(student)) {
 			students.add(student);
 			student.setSchoolClass(this);
-			Logger.getInstance().log(
-					"Added " + student.toString() + " to class "
-							+ this.toString());
 		}
 	}
 
