@@ -63,6 +63,7 @@ public class PhotoCrawler {
 //        return photos -> photos.filter(photoProcessor::isPhotoValid).map(photoProcessor::convertToMiniature);
 
         //loguje wielkości, żeby móc łatwo sprawdzić czy się dobrze wykonuje
+        // czemu nie loguje przy każdym pobranym zdjęciu mały, średni lub duży => czy z każdym nowym photo sprawdza size a potem "dokleja się" do odpowiedniego observabla?
         return photos -> photos
                             .groupBy(PhotoSize::resolve)
                             .flatMap(group -> {
