@@ -82,11 +82,12 @@ public class PhotoCrawler {
                                     return group
                                             .observeOn(Schedulers.computation()) //używamy observeOn, żeby od tej pory w dół (w łancuchu) korzystał z odpowiedniego Schedulersa
                                             .map(photoProcessor::convertToMiniature);
+
                                     // chciałem zrobić jak poniżej, ale nie ma w projekcie zaimportowanego rxandroida,
-                                    // który jest potrzebny do korzystania z AndroidSchedulers, żeby dostać się do głównego wątku
+                                    // który jest potrzebny do korzystania z AndroidSchedulers, dzięki którym można dostać się do głównego wątku
                                     // a trudności z dodaniem go do dependencies przewyższyły moje umiejętności i pokłady cierpliwości
 //                                    return group
-//                                            .subscribeOn(Schedulers.computation()) // subscribe on powoduje, że działamy na computationach (od początku łańcucha aż do...
+//                                            .subscribeOn(Schedulers.computation()) // subscribeon powoduje, że działamy na computationach (od początku łańcucha aż do...
 //                                            .map(photoProcessor::convertToMiniature)
 //                                            .observeOn(AndroidSchedulers.mainThread()); // ... teraz - od tego momentu korzystamy (z powrotem) z głównego wątku
                                 }
