@@ -14,12 +14,12 @@ public class CrawlerApp {
     public static void main(String[] args) throws IOException {
         PhotoCrawler photoCrawler = new PhotoCrawler();
         photoCrawler.resetLibrary();
-//        photoCrawler.downloadPhotoExamples();
-//        photoCrawler.downloadPhotosForQuery(TOPICS.get(0));
+        photoCrawler.downloadPhotoExamples();
+        photoCrawler.downloadPhotosForQuery(TOPICS.get(0));
         photoCrawler.downloadPhotosForMultipleQueries(TOPICS);
 
         try {
-            Thread.sleep(100_000);
+            Thread.sleep(50_000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } //żeby poczekał na Schedulera, który odpala w innych wątkach dodawanie zdjęć (PhotoDownloader#searchForPhotos)
