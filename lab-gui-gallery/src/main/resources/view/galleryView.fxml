@@ -13,9 +13,10 @@
             fx:controller="controller.GalleryController">
     <top>
         <HBox styleClass="form-box">
+            <ProgressIndicator fx:id="progressIndicator"/>
             <Label text="Search for photos:" prefWidth="120"/>
             <TextField fx:id="searchTextField" promptText="Enter search query..." prefWidth="580"/>
-            <Button text="Search" onAction="#searchButtonClicked"/>
+            <Button fx:id="searchButton" text="Search" onAction="#searchButtonClicked"/>
         </HBox>
     </top>
     <left>

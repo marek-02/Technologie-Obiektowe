@@ -39,7 +39,6 @@ public class PhotoDownloader {
                                     log.log(Level.WARNING, "Could not download a photo", e);
                                     return Observable.empty();
                                 })
-//                         Uncomment line below to download each photo in separate thread
 //                        .subscribeOn(Schedulers.computation())
                 );
     }

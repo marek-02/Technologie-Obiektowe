@@ -7,6 +7,9 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 
@@ -30,7 +33,8 @@ public class    PhotoSerializer {
             while (change.next()) {
                 if (change.wasAdded()) {
                     change.getAddedSubList().forEach(element -> {
-                        savePhoto(element);
+                        Observable.just(element).subscribeOn(Schedulers.io()).subscribe(this::savePhoto);
+
                         element.nameProperty().addListener((observable, oldValue, newValue) -> {
                             renamePhoto(oldValue, newValue);
                         });
