@@ -7,12 +7,13 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 
 import model.Gallery;
 import model.Photo;
 
-public class PhotoSerializer {
+public class    PhotoSerializer {
 
     private static final Logger log = Logger.getLogger(PhotoSerializer.class.getName());
 
@@ -25,7 +26,22 @@ public class PhotoSerializer {
     }
 
     public void registerGallery(Gallery gallery) {
-        // TODO model <-> serializer bindings configuration
+        gallery.getPhotos().addListener((ListChangeListener<Photo>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    change.getAddedSubList().forEach(element -> {
+                        savePhoto(element);
+                        element.nameProperty().addListener((observable, oldValue, newValue) -> {
+                            renamePhoto(oldValue, newValue);
+                        });
+                    });
+                } else if (change.wasRemoved()) {
+                    change.getRemoved().forEach(element -> {
+                        removePhoto(element);
+                    });
+                }
+            }
+        });
     }
 
     private void createLibraryDirectory() throws IOException {

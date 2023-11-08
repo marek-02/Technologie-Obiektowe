@@ -68,6 +68,7 @@ public class DuckDuckGoDriver {
         var jsonObject = new JSONObject(response.body());
         var results = jsonObject.getJSONArray("results");
         return StreamSupport.stream(results.spliterator(), false)
+                .limit(10)
                 .filter(JSONObject.class::isInstance)
                 .map(result -> ((JSONObject) result).getString("image"))
                 .collect(Collectors.toList());
